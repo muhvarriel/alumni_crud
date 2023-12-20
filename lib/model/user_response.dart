@@ -1,7 +1,7 @@
 class UserResponse {
   int? page;
   int? perPage;
-  int? total;
+  double? total;
   int? totalPages;
   List<DataUser>? data;
   Support? support;
@@ -17,7 +17,7 @@ class UserResponse {
   UserResponse.fromJson(Map<String, dynamic> json) {
     page = json['page'];
     perPage = json['per_page'];
-    total = json['total'];
+    total = double.tryParse((json['total'] ?? 0).toString());
     totalPages = json['total_pages'];
     if (json['data'] != null) {
       data = <DataUser>[];

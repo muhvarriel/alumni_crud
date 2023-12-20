@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_mobile/model/user.dart';
 import 'package:movie_mobile/model/user_response.dart';
 import 'package:movie_mobile/repository/user_provider.dart';
+import 'package:movie_mobile/widget/button_widget.dart';
 
 class CrudApiScreen extends StatefulWidget {
   const CrudApiScreen({super.key});
@@ -136,61 +137,77 @@ class _CrudApiScreenState extends State<CrudApiScreen> {
           onPressed: () {
             modalButton();
           }),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : (listUser.isEmpty
-              ? const Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("No Data"),
-                    ],
-                  ),
-                )
-              : Scrollbar(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: listUser.length,
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Row(
+      body: Column(
+        children: [
+          Expanded(
+            child: isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : (listUser.isEmpty
+                    ? const Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    listUser[index].name ??
-                                        "Test Test Test Test Test Test Test Test Test Test",
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Text(listUser[index].job ?? ""),
-                                ],
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                modalButton(user: listUser[index]);
-                              },
-                              icon: const Icon(Icons.edit_rounded),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                delete(listUser[index]);
-                              },
-                              icon: const Icon(
-                                Icons.delete_rounded,
-                                color: Colors.red,
-                              ),
-                            ),
+                            Text("No Data"),
                           ],
                         ),
-                      );
-                    },
-                  ),
-                )),
+                      )
+                    : Scrollbar(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: listUser.length,
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          listUser[index].name ??
+                                              "Test Test Test Test Test Test Test Test Test Test",
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        Text(listUser[index].job ?? ""),
+                                      ],
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      modalButton(user: listUser[index]);
+                                    },
+                                    icon: const Icon(Icons.edit_rounded),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      delete(listUser[index]);
+                                    },
+                                    icon: const Icon(
+                                      Icons.delete_rounded,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      )),
+          ),
+          /*
+          Container(
+            padding: const EdgeInsets.all(20),
+            child: ButtonWidget(
+              label: "Add",
+              onPressed: () {},
+            ),
+          ),
+          */
+        ],
+      ),
     );
   }
 }
